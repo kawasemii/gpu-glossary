@@ -6,7 +6,7 @@ The literal neck of a bottle limits the rate at which liquid can be poured; a
 metaphorical performance bottleneck in a system limits the rate at which tasks
 can be completed.
 
-![[Roofline diagrams](/gpu-glossary/perf/roofline-model) like this one are used to quickly identify performance bottlenecks in throughput-oriented systems. Adapted from [Williams, Waterman, and Patterson (2008)](https://people.eecs.berkeley.edu/~kubitron/cs252/handouts/papers/RooflineVyNoYellow.pdf).](themed-image://roofline-model.svg)
+![[Roofline diagrams](/gpu-glossary/perf/roofline-model.md) like this one are used to quickly identify performance bottlenecks in throughput-oriented systems. Adapted from [Williams, Waterman, and Patterson (2008)](https://people.eecs.berkeley.edu/~kubitron/cs252/handouts/papers/RooflineVyNoYellow.pdf) ([local copy here[(../resources/RooflineVyNoYellow.pdf)).](../resources/terminal-roofline-model.svg)
 
 Bottlenecks are the target of performance optimization. The textbook approach to
 optimization is to
@@ -22,35 +22,35 @@ that helped
 [thence to software engineering and operations](https://youtu.be/1jU7iUr-0xE).
 
 In [this talk for Jane Street](https://youtu.be/139UPjoq7Kw?t=1229), Horace He
-broke down the work done by the [kernels](/gpu-glossary/device-software/kernel)
+broke down the work done by the [kernels](/gpu-glossary/device-software/kernel.md)
 of programs run on GPUs into three categories:
 
 - Compute (running floating point operations on
-  [CUDA Cores](/gpu-glossary/device-hardware/cuda-core) or
-  [Tensor Cores](/gpu-glossary/device-hardware/tensor-core))
+  [CUDA Cores](/gpu-glossary/device-hardware/cuda-core.md) or
+  [Tensor Cores](/gpu-glossary/device-hardware/tensor-core.md))
 - Memory (moving data in the system's
-  [memory hierarchy](/gpu-glossary/device-software/memory-hierarchy))
+  [memory hierarchy](/gpu-glossary/device-software/memory-hierarchy.md))
 - Overhead (everything else)
 
-And so for GPU [kernels](/gpu-glossary/device-software/kernel), performance
+And so for GPU [kernels](/gpu-glossary/device-software/kernel.md), performance
 bottlenecks fall into three main\* categories:
 
-- [compute-bound](/gpu-glossary/perf/compute-bound)
-  [kernels](/gpu-glossary/device-software/kernel), bottlenecked by the
-  [arithmetic bandwidth](/gpu-glossary/perf/arithmetic-bandwidth) of compute
+- [compute-bound](/gpu-glossary/perf/compute-bound.md)
+  [kernels](/gpu-glossary/device-software/kernel.md), bottlenecked by the
+  [arithmetic bandwidth](/gpu-glossary/perf/arithmetic-bandwidth.md) of compute
   units, like large matrix-matrix multiplication,
-- [memory-bound](/gpu-glossary/perf/memory-bound)
-  [kernels](/gpu-glossary/device-software/kernel), bottlenecked by the
-  [bandwidth of memory subsystems](/gpu-glossary/perf/memory-bandwidth), like
+- [memory-bound](/gpu-glossary/perf/memory-bound.md)
+  [kernels](/gpu-glossary/device-software/kernel.md), bottlenecked by the
+  [bandwidth of memory subsystems](/gpu-glossary/perf/memory-bandwidth.md), like
   large vector-vector multiplication, and
-- [overhead-bound](/gpu-glossary/perf/overhead)
-  [kernels](/gpu-glossary/device-software/kernel) bottlenecked by latency, like
+- [overhead-bound](/gpu-glossary/perf/overhead.md)
+  [kernels](/gpu-glossary/device-software/kernel.md) bottlenecked by latency, like
   small array operations.
 
-[Roofline model](/gpu-glossary/perf/roofline-model) analysis helps quickly
+[Roofline model](/gpu-glossary/perf/roofline-model.md) analysis helps quickly
 identify whether a program's performance is bottlenecked by
-compute/[arithmetic bandwidth](/gpu-glossary/perf/arithmetic-bandwidth) or
-[memory bandwidth](/gpu-glossary/perf/memory-bandwidth).
+compute/[arithmetic bandwidth](/gpu-glossary/perf/arithmetic-bandwidth.md) or
+[memory bandwidth](/gpu-glossary/perf/memory-bandwidth.md).
 
 <small>Of course, _any_ resource can become a bottleneck. For instance, power
 ingress and heat egress can and does bottleneck some GPUs below their
@@ -58,7 +58,7 @@ theoretical maximum performance. See
 [this article from NVIDIA](https://developer.nvidia.com/blog/nvidia-sets-new-generative-ai-performance-and-scale-records-in-mlperf-training-v4-0/)
 explaining a 4% end-to-end performance improvement by redirecting power from the
 L2 cache to the
-[Streaming Multiprocessors](/gpu-glossary/device-hardware/streaming-multiprocessor)
+[Streaming Multiprocessors](/gpu-glossary/device-hardware/streaming-multiprocessor.md)
 or
 [this article from Horace He](https://www.thonking.ai/p/strangely-matrix-multiplications)
 indicating that matrix multiplication performance varies depending on the input
