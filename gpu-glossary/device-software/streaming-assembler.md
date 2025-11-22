@@ -7,16 +7,16 @@ abbreviation: SASS
 (SASS) is the assembly format for programs running on NVIDIA GPUs. This is the
 lowest-level format in which human-readable code can be written. It is one of
 the formats output by `nvcc`, the
-[NVIDIA CUDA Compiler Driver](/gpu-glossary/host-software/nvcc), alongside
-[PTX](/gpu-glossary/device-software/parallel-thread-execution). It is converted
+[NVIDIA CUDA Compiler Driver](/gpu-glossary/host-software/nvcc.md), alongside
+[PTX](/gpu-glossary/device-software/parallel-thread-execution.md). It is converted
 to device-specific binary microcodes during execution. Presumably, the
 "Streaming" in "Streaming Assembler" refers to the
-[Streaming Multiprocessors](/gpu-glossary/device-hardware/streaming-multiprocessor)
+[Streaming Multiprocessors](/gpu-glossary/device-hardware/streaming-multiprocessor.md)
 which the assembly language programs.
 
 SASS is versioned and tied to a specific NVIDIA GPU
-[SM architecture](/gpu-glossary/device-hardware/streaming-multiprocessor-architecture).
-See also [Compute Capability](/gpu-glossary/device-software/compute-capability).
+[SM architecture](/gpu-glossary/device-hardware/streaming-multiprocessor-architecture.md).
+See also [Compute Capability](/gpu-glossary/device-software/compute-capability.md).
 
 Some exemplary instructions in SASS for the SM90a architecture of Hopper GPUs:
 
@@ -24,17 +24,17 @@ Some exemplary instructions in SASS for the SM90a architecture of Hopper GPUs:
   that multiplies the contents of `R`egister 7 and `R`egister 0, adds `1.5`, and
   stores the result in `R`egister 0.
 - `S2UR UR4, SR_CTAID.X ;` - copy the `X` value of the
-  [Cooperative Thread Array](/gpu-glossary/device-software/cooperative-thread-array)'s
+  [Cooperative Thread Array](/gpu-glossary/device-software/cooperative-thread-array.md)'s
   `I`n`D`ex from its `S`pecial `R`egister to `U`niform `R`egister 4.
 
 Even more so than for CPUs, writing this "GPU assembler" by hand is very
 uncommon. Viewing compiler-generated SASS while profiling and editing high-level
-[CUDA C/C++](/gpu-glossary/host-software/cuda-c) code or in-line
-[PTX](/gpu-glossary/device-software/parallel-thread-execution) is
+[CUDA C/C++](/gpu-glossary/host-software/cuda-c.md) code or in-line
+[PTX](/gpu-glossary/device-software/parallel-thread-execution.md) is
 [more common](https://docs.nvidia.com/gameworks/content/developertools/desktop/ptx_sass_assembly_debugging.htm),
 especially in the production of the highest-performance kernels. Viewing
-[CUDA C/C++](/gpu-glossary/host-software/cuda-c), SASS, and
-[PTX](/gpu-glossary/device-software/parallel-thread-execution) together is
+[CUDA C/C++](/gpu-glossary/host-software/cuda-c.md), SASS, and
+[PTX](/gpu-glossary/device-software/parallel-thread-execution.md) together is
 supported on [Godbolt](https://godbolt.org/z/5r9ej3zjW). For more detail on SASS
 with a focus on performance debugging workflows, see
 [this talk](https://www.youtube.com/watch?v=we3i5VuoPWk) from Arun Demeure.
