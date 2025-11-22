@@ -4,55 +4,55 @@ title: What is the roofline model?
 
 The roofline model is a simplified, visual model of performance used to quickly
 determine whether a program is bound by
-[memory bandwidth](/gpu-glossary/perf/memory-bandwidth) or
-[arithmetic bandwidth](/gpu-glossary/perf/arithmetic-bandwidth).
+[memory bandwidth](/gpu-glossary/perf/memory-bandwidth.md) or
+[arithmetic bandwidth](/gpu-glossary/perf/arithmetic-bandwidth.md).
 
-![[Kernels](/gpu-glossary/device-software/kernel) to the left of the ridge point are [limited by the bandwidth of the memory subsystem](/gpu-glossary/perf/memory-bound) and [kernels](/gpu-glossary/device-software/kernel) to the right of the ridge point are [limited by the bandwidth of the arithmetic subsystem](/gpu-glossary/perf/compute-bound). Diagram adapted from [Williams, Waterman, and Patterson (2008)](https://people.eecs.berkeley.edu/~kubitron/cs252/handouts/papers/RooflineVyNoYellow.pdf), which introduced the roofline model.](themed-image://roofline-model.svg)
+![[Kernels](/gpu-glossary/device-software/kernel.md) to the left of the ridge point are [limited by the bandwidth of the memory subsystem](/gpu-glossary/perf/memory-bound.md) and [kernels](/gpu-glossary/device-software/kernel.md) to the right of the ridge point are [limited by the bandwidth of the arithmetic subsystem](/gpu-glossary/perf/compute-bound.md). Diagram adapted from [Williams, Waterman, and Patterson (2008)](https://people.eecs.berkeley.edu/~kubitron/cs252/handouts/papers/RooflineVyNoYellow.pdf) ([local copy here](../resources/RooflineVyNoYellow.pdf)), which introduced the roofline model.](../resources/terminal-roofline-model.svg)
 
 In the roofline model, two hardware‑derived "roofs" put a "ceiling" on the
 possible performance:
 
-- the "compute roof" – the [peak rate](/gpu-glossary/perf/peak-rate) of the
-  target hardware ([CUDA Cores](/gpu-glossary/device-hardware/cuda-core) or
-  [Tensor Cores](/gpu-glossary/device-hardware/tensor-core)), aka the
-  [arithmetic bandwidth](/gpu-glossary/perf/arithmetic-bandwidth)
+- the "compute roof" – the [peak rate](/gpu-glossary/perf/peak-rate.md) of the
+  target hardware ([CUDA Cores](/gpu-glossary/device-hardware/cuda-core.md) or
+  [Tensor Cores](/gpu-glossary/device-hardware/tensor-core.md)), aka the
+  [arithmetic bandwidth](/gpu-glossary/perf/arithmetic-bandwidth.md)
 - the "memory roof" – the peak memory throughput of the target hardware, aka the
-  [memory bandwidth](/gpu-glossary/perf/memory-bandwidth).
+  [memory bandwidth](/gpu-glossary/perf/memory-bandwidth.md).
 
 These are visualized on a plane with the
-[arithmetic intensity](/gpu-glossary/perf/arithmetic-intensity) (in operations
+[arithmetic intensity](/gpu-glossary/perf/arithmetic-intensity.md) (in operations
 per byte) on the x-axis and the performance (in operations per second) on the
 y-axis. The "compute roof" is a horizontal line with height equal to the
-[arithmetic bandwidth](/gpu-glossary/perf/arithmetic-bandwidth). The "memory
+[arithmetic bandwidth](/gpu-glossary/perf/arithmetic-bandwidth.md). The "memory
 roof" is a slanted line with slope equal to the
-[memory bandwidth](/gpu-glossary/perf/memory-bandwidth). Slope is "rise over
+[memory bandwidth](/gpu-glossary/perf/memory-bandwidth.md). Slope is "rise over
 run", and so the line has units of bytes per second (operations per second
 divided by operations per byte).
 
-A specific [kernel's](/gpu-glossary/device-software/kernel) x-coordinate tells
+A specific [kernel's](/gpu-glossary/device-software/kernel.md) x-coordinate tells
 you instantly whether it is fundamentally
-[compute-bound](/gpu-glossary/perf/compute-bound) (points beneath the flat roof)
-or [memory-bound](/gpu-glossary/perf/memory-bound) (points beneath the slanted
-roof). [Kernels](/gpu-glossary/device-software/kernel) are rarely up against
-either roof due to the effects of [overhead](/gpu-glossary/perf/overhead).
+[compute-bound](/gpu-glossary/perf/compute-bound.md) (points beneath the flat roof)
+or [memory-bound](/gpu-glossary/perf/memory-bound.md) (points beneath the slanted
+roof). [Kernels](/gpu-glossary/device-software/kernel.md) are rarely up against
+either roof due to the effects of [overhead](/gpu-glossary/perf/overhead.md).
 
 The point on the boundary, i.e. where the diagonal and horizontal roof meet, is
 called the "ridge point". Its x-coordinate is the minimum
-[arithmetic intensity](/gpu-glossary/perf/arithmetic-intensity) required to be
+[arithmetic intensity](/gpu-glossary/perf/arithmetic-intensity.md) required to be
 able to escape the memory
-[bottleneck](/gpu-glossary/perf/performance-bottleneck). Computer systems whose
+[bottleneck](/gpu-glossary/perf/performance-bottleneck.md). Computer systems whose
 ridge point is further to the left are easier to achieve maximum performance on,
 but the relatively poor scaling of memory relative to compute generally has
 pushed the ridge points of systems to the right over time.
 
 The compute and memory roofs need only be derived once per subsystem (though
 importantly they vary depending on the subsystem, not just the system;
-[Tensor Cores](/gpu-glossary/device-hardware/tensor-core) have more FLOPS than
-[CUDA Cores](/gpu-glossary/device-hardware/cuda-core)).
+[Tensor Cores](/gpu-glossary/device-hardware/tensor-core.md) have more FLOPS than
+[CUDA Cores](/gpu-glossary/device-hardware/cuda-core.md)).
 
-NVIDIA's NSight Compute tool for [kernel](/gpu-glossary/device-software/kernel)
+NVIDIA's NSight Compute tool for [kernel](/gpu-glossary/device-software/kernel.md)
 performance engineering automatically performs roofline analysis for profiled
-[kernels](/gpu-glossary/device-software/kernel).
+[kernels](/gpu-glossary/device-software/kernel.md).
 
 The roofline model is deceptively simple. Note that, for instance, system
 latencies do not appear anywhere in the diagram, only bandwidths and
@@ -62,7 +62,7 @@ proper application of the roofline.
 
 The roofline model was introduced by Samuel Williams, Andrew Waterman, and David
 Patterson in
-[this 2008 paper](https://people.eecs.berkeley.edu/~kubitron/cs252/handouts/papers/RooflineVyNoYellow.pdf).
+[this 2008 paper](https://people.eecs.berkeley.edu/~kubitron/cs252/handouts/papers/RooflineVyNoYellow.pdf) ([local copy here](../resources/RooflineVyNoYellow.pdf)).
 They introduced it in the face of several hardware scaling trends that shaped
 system architectures before and since.
 
@@ -75,9 +75,9 @@ GPUs, throughput-oriented.
 
 Second, as has long been observed, compute subsystems (like processor cores)
 have scaled their performance much more rapidly than memory subsystems like
-[caches](/gpu-glossary/device-hardware/l1-data-cache) and
-[DRAM](/gpu-glossary/device-hardware/gpu-ram). This was popularized as the
-["memory wall"](https://www.eecs.ucf.edu/~lboloni/Teaching/EEL5708_2006/slides/wulf94.pdf)
+[caches](/gpu-glossary/device-hardware/l1-data-cache.md) and
+[DRAM](/gpu-glossary/device-hardware/gpu-ram.md). This was popularized as the
+["memory wall"](https://www.eecs.ucf.edu/~lboloni/Teaching/EEL5708_2006/slides/wulf94.pdf) ([local copy here](../resources/wulf94.pdf))
 by Wulf and McKee in 1994.
 
 Finally, the early 2000s saw the end of
@@ -98,12 +98,12 @@ Hennessy and Patterson's
 
 Taken together, these trends correctly suggested to the authors that future
 systems would be throughput-oriented and that among the various bandwidths at
-play, the [bandwidth of memory subsystems](/gpu-glossary/perf/memory-bandwidth)
+play, the [bandwidth of memory subsystems](/gpu-glossary/perf/memory-bandwidth.md)
 would be the primary
-[performance bottleneck](/gpu-glossary/perf/performance-bottleneck).
+[performance bottleneck](/gpu-glossary/perf/performance-bottleneck.md).
 Applications of those systems that wanted to achieve peak performance would
 therefore need to have high operational intensity for that hardware's
 specialized operations — in the case of GPUs,
-[arithmetic intensity](/gpu-glossary/perf/arithmetic-intensity) for
-[Tensor Cores](/gpu-glossary/device-hardware/tensor-core), which is to say very
+[arithmetic intensity](/gpu-glossary/perf/arithmetic-intensity.md) for
+[Tensor Cores](/gpu-glossary/device-hardware/tensor-core.md), which is to say very
 large matrix multiplications.
