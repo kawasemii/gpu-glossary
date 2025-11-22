@@ -3,7 +3,7 @@ title: What is nvidia-smi?
 ---
 
 This command line utility is used to query and manage the state of the GPU
-exposed by the [NVML](/gpu-glossary/host-software/nvml) management libraries.
+exposed by the [NVML](/gpu-glossary/host-software/nvml.md) management libraries.
 Its outputs, a sample of which appears below, are familiar to users of NVIDIA
 GPUs to the point of being a
 [meme](https://x.com/boborado/status/1752724223934578760).
@@ -25,7 +25,7 @@ compute mode (`-c`), power limits (`-pl`), application/locked clocks (`-ac`,
 
 Output can be formatted as human-readable text or XML (`-x`). While
 `nvidia-smi`'s text output format is not guaranteed to be stable, the underlying
-[NVML C library](/gpu-glossary/host-software/nvml) offers a stable API for tool
+[NVML C library](/gpu-glossary/host-software/nvml.md) offers a stable API for tool
 development.
 
 The documentation for `nvidia-smi` can be found
