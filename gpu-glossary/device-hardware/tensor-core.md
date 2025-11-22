@@ -154,7 +154,7 @@ primary producers and consumers of
 Tensor Cores were introduced in the V100 GPU, which represented a major
 improvement in the suitability of NVIDIA GPUs for large neural network
 workloads. For more, see
-[the NVIDIA white paper introducing the V100](https://images.nvidia.com/content/volta-architecture/pdf/volta-architecture-whitepaper.pdf) ([local copy here] (../resources/volta-architecture-whitepaper.pdf)).
+[the NVIDIA white paper introducing the V100](https://images.nvidia.com/content/volta-architecture/pdf/volta-architecture-whitepaper.pdf) ([local copy here](../resources/volta-architecture-whitepaper.pdf)).
 
 The internals of Tensor Cores are unknown, and likely differ from
 [SM Architecture](/gpu-glossary/device-hardware/streaming-multiprocessor-architecture.md)
