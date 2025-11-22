@@ -8,15 +8,15 @@ complete work.
 Peak rate represents the absolute upper bound of GPU performance when every
 execution unit operates at maximum capacity with perfect efficiency. It assumes
 ideal operation, where no resource constraints
-([registers](/gpu-glossary/device-software/registers),
-[memory bandwidth](/gpu-glossary/perf/memory-bandwidth), synchronization
-barriers, etc.) create [bottlenecks](/gpu-glossary/perf/performance-bottleneck).
+([registers](/gpu-glossary/device-software/registers.md),
+[memory bandwidth](/gpu-glossary/perf/memory-bandwidth.md), synchronization
+barriers, etc.) create [bottlenecks](/gpu-glossary/perf/performance-bottleneck.md).
 
 Peak rate is the yardstick against which all achieved performance is measured.
-It sets the [compute-bound](/gpu-glossary/perf/compute-bound) "roof" in a
-[roofline analysis](/gpu-glossary/perf/roofline-model). It is the denominator in
+It sets the [compute-bound](/gpu-glossary/perf/compute-bound.md) "roof" in a
+[roofline analysis](/gpu-glossary/perf/roofline-model.md). It is the denominator in
 the utilization fraction reported in
-[pipe utilization](/gpu-glossary/perf/pipe-utilization) metrics and the
+[pipe utilization](/gpu-glossary/perf/pipe-utilization.md) metrics and the
 [ultimate arbiter of GPU utilization](https://modal.com/blog/gpu-utilization-guide).
 
 Poetically, NVIDIA engineers often call it the "speed of light" — the limit on
