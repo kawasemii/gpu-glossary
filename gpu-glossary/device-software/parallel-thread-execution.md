@@ -6,7 +6,7 @@ abbreviation: PTX
 Parallel Thread eXecution (PTX) is an intermediate representation (IR) for code
 that will run on a parallel processor (almost always an NVIDIA GPU). It is one
 of the formats output by `nvcc`, the
-[NVIDIA CUDA Compiler Driver](/gpu-glossary/host-software/nvcc). It is
+[NVIDIA CUDA Compiler Driver](/gpu-glossary/host-software/nvcc.md). It is
 pronounced "pee-tecks" by many NVIDIA engineers and "pee-tee-ecks" by everyone
 else.
 
@@ -25,14 +25,14 @@ also similar to CPU instruction set architectures like
 Unlike those ISAs, PTX is very much an
 [intermediate representation](https://en.wikipedia.org/wiki/Intermediate_representation),
 like LLVM-IR. The PTX components of a
-[CUDA binary](/gpu-glossary/host-software/cuda-binary-utilities) will be
+[CUDA binary](/gpu-glossary/host-software/cuda-binary-utilities.md) will be
 just-in-time (JIT) compiled by the host
-[CUDA Drivers](/gpu-glossary/host-software/nvidia-gpu-drivers) into
-device-specific [SASS](/gpu-glossary/device-software/streaming-assembler) for
+[CUDA Drivers](/gpu-glossary/host-software/nvidia-gpu-drivers.md) into
+device-specific [SASS](/gpu-glossary/device-software/streaming-assembler.md) for
 execution.
 
 In the case of NVIDIA GPUs, PTX is forward-compatible: GPUs with a matching or
-higher [compute capability](/gpu-glossary/device-software/compute-capability)
+higher [compute capability](/gpu-glossary/device-software/compute-capability.md)
 version will be able to run the program, thanks to this mechanism of JIT
 compilation. In this way, PTX is a
 ["narrow waist"](https://www.oilshell.org/blog/2022/02/diagrams.html) that
@@ -45,14 +45,14 @@ Some exemplary PTX:
 ```
 
 - a compiler directive for the
-  PTX-to-[SASS](/gpu-glossary/device-software/streaming-assembler) compiler
+  PTX-to-[SASS](/gpu-glossary/device-software/streaming-assembler.md) compiler
   indicating that this kernel consumes seven 32-bit floating point
-  [registers](/gpu-glossary/device-software/registers). Registers are
+  [registers](/gpu-glossary/device-software/registers.md). Registers are
   dynamically allocated to groups of
-  [threads](/gpu-glossary/device-software/thread)
-  ([warps](/gpu-glossary/device-software/warp)) from the
-  [SM](/gpu-glossary/device-hardware/streaming-multiprocessor)'s
-  [register file](/gpu-glossary/device-hardware/register-file).
+  [threads](/gpu-glossary/device-software/thread.md)
+  ([warps](/gpu-glossary/device-software/warp.md)) from the
+  [SM](/gpu-glossary/device-hardware/streaming-multiprocessor.md)'s
+  [register file](/gpu-glossary/device-hardware/register-file.md).
 
 ```ptx
 fma.rn.f32 %f5, %f4, %f3, 0f3FC00000;
@@ -78,23 +78,23 @@ The PTX programming model exposes multiple levels of parallelism to the
 programmer. These levels map directly onto the hardware through the PTX machine
 model, diagrammed below.
 
-![The PTX machine model. Modified from the [PTX documentation](https://docs.nvidia.com/cuda/parallel-thread-execution/#ptx-machine-model).](themed-image://ptx-machine-model.svg)
+![The PTX machine model. Modified from the [PTX documentation](https://docs.nvidia.com/cuda/parallel-thread-execution/#ptx-machine-model).](../resources/terminal-ptx-machine-model.svg)
 
 Notably, in this machine model there is a single instruction unit for multiple
 processors. While each processor runs one
-[thread](/gpu-glossary/device-software/thread), those threads must execute the
+[thread](/gpu-glossary/device-software/thread.md), those threads must execute the
 same instructions — hence _parallel_ thread execution, or PTX. They coordinate
 with each other through
-[shared memory](/gpu-glossary/device-software/shared-memory) and effect
+[shared memory](/gpu-glossary/device-software/shared-memory.md) and effect
 different results by means of private
-[registers](/gpu-glossary/device-software/registers).
+[registers](/gpu-glossary/device-software/registers.md).
 
 The documentation for the latest version of PTX is available from NVIDIA
 [here](https://docs.nvidia.com/cuda/parallel-thread-execution/). The instruction
 sets of PTX are versioned with a number called the
-"[compute capability](/gpu-glossary/device-software/compute-capability)", which
+"[compute capability](/gpu-glossary/device-software/compute-capability.md)", which
 is synonymous with "minimum supported
-[Streaming Multiprocessor architecture](/gpu-glossary/device-hardware/streaming-multiprocessor-architecture)
+[Streaming Multiprocessor architecture](/gpu-glossary/device-hardware/streaming-multiprocessor-architecture.md)
 version".
 
 Writing in-line PTX by hand is uncommon outside of the cutting edge of
@@ -105,9 +105,9 @@ in September of 2025, in-line PTX is the only way to take advantage of some
 Hopper-specific hardware features like the `wgmma` and `tma` instructions, as in
 [Flash Attention 3](https://arxiv.org/abs/2407.08608) or in the
 [Machete w4a16 kernels](https://youtu.be/-4ZkpQ7agXM). Viewing
-[CUDA C/C++](/gpu-glossary/host-software/cuda-c),
-[SASS](/gpu-glossary/device-software/streaming-assembler), and
-[PTX](/gpu-glossary/device-software/parallel-thread-execution) together is
+[CUDA C/C++](/gpu-glossary/host-software/cuda-c.md),
+[SASS](/gpu-glossary/device-software/streaming-assembler.md), and
+[PTX](/gpu-glossary/device-software/parallel-thread-execution.md) together is
 supported on [Godbolt](https://godbolt.org/z/5r9ej3zjW). See the
 [NVIDIA "Inline PTX Assembly in CUDA" guide](https://docs.nvidia.com/cuda/inline-ptx-assembly/)
 for details.
