@@ -11,7 +11,7 @@ thermal readings, see
 [this page on the Modal docs](https://modal.com/docs/guide/gpu-metrics).
 
 The functions of NVML are frequently accessed via the
-[nvidia-smi](/gpu-glossary/host-software/nvidia-smi) command line utility, but
+[nvidia-smi](/gpu-glossary/host-software/nvidia-smi.md) command line utility, but
 are also accessible to programs via wrappers, like
 [pynvml in Python](https://pypi.org/project/pynvml/) and
 [nvml_wrapper in Rust](https://docs.rs/nvml-wrapper/latest/nvml_wrapper/).
