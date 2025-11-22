@@ -3,25 +3,25 @@ title: What is Memory Coalescing?
 ---
 
 Memory coalescing is a hardware technique to improve the utilization of
-[memory bandwidth](/gpu-glossary/perf/memory-bandwidth) by servicing multiple
+[memory bandwidth](/gpu-glossary/perf/memory-bandwidth.md) by servicing multiple
 _logical_ memory reads in a single _physical_ memory access.
 
 Memory coalescing occurs during accesses of
-[global memory](/gpu-glossary/device-software/global-memory). For efficient
-access of [shared memory](/gpu-glossary/device-software/shared-memory), see the
-article on [bank conflict](/gpu-glossary/perf/bank-conflict).
+[global memory](/gpu-glossary/device-software/global-memory.md). For efficient
+access of [shared memory](/gpu-glossary/device-software/shared-memory.md), see the
+article on [bank conflict](/gpu-glossary/perf/bank-conflict.md).
 
-In [CUDA](/gpu-glossary/device-hardware/cuda-device-architecture) GPUs,
-[global memory](/gpu-glossary/device-software/global-memory) is backed by the
-[GPU RAM](/gpu-glossary/device-hardware/gpu-ram), built with Dynamic Random
+In [CUDA](/gpu-glossary/device-hardware/cuda-device-architecture.md) GPUs,
+[global memory](/gpu-glossary/device-software/global-memory.md) is backed by the
+[GPU RAM](/gpu-glossary/device-hardware/gpu-ram.md), built with Dynamic Random
 Access Memory (DRAM) technologies like GDDR or HBM. These technologies have high
-[memory bandwidth](/gpu-glossary/perf/memory-bandwidth) but long access latency
+[memory bandwidth](/gpu-glossary/perf/memory-bandwidth.md) but long access latency
 (even compared to the peer technology used in CPU RAM, DDR5). DRAM access
 latency is limited by the speed at which the small capacitors can charge up
 their access lines, which is fundamentally limited by thermal, power, and size
 constraints. Due to this high latency, if all logical memory accesses are
 serviced as separate physical accesses, the GPU's
-[memory bandwidth](/gpu-glossary/perf/memory-bandwidth) will not be fully
+[memory bandwidth](/gpu-glossary/perf/memory-bandwidth.md) will not be fully
 utilized.
 
 Memory coalescing takes advantage of the internals of DRAM technology to enable
@@ -30,7 +30,7 @@ is accessed, multiple consecutive addresses are fetched together in parallel in
 a single clock. For a bit more detail, see Section 6.1 of
 [the 4th edition of Programming Massively Parallel Processors](https://www.amazon.com/dp/0323912311);
 for comprehensive detail, see Ulrich Drepper's excellent article
-[_What Every Programmer Should Know About Memory_](https://people.freebsd.org/~lstewart/articles/cpumemory.pdf).
+[_What Every Programmer Should Know About Memory_](https://people.freebsd.org/~lstewart/articles/cpumemory.pdf) ([local copy here](cpumemory.pdf)).
 The access and transfer of these consecutive memory locations is referred to as
 a _DRAM burst_. If multiple concurrent logical accesses are serviced by a single
 physical burst, the access is said to be _coalesced_. Note that a physical
@@ -43,22 +43,22 @@ CPUs is here programmer-managed.
 
 That's not as hard as it could be, because DRAM bursts align elegantly with the
 single-instruction, multiple thread (SIMT) execution model of
-[CUDA PTX](/gpu-glossary/device-software/parallel-thread-execution). That is, in
-normal execution all [threads](/gpu-glossary/device-software/thread) in a
-[warp](/gpu-glossary/device-software/warp) execute the same instruction at the
+[CUDA PTX](/gpu-glossary/device-software/parallel-thread-execution.md). That is, in
+normal execution all [threads](/gpu-glossary/device-software/thread.md) in a
+[warp](/gpu-glossary/device-software/warp.md) execute the same instruction at the
 same time. That makes it easy for a
-[CUDA](/gpu-glossary/device-software/cuda-programming-model) programmer to write
+[CUDA](/gpu-glossary/device-software/cuda-programming-model.md) programmer to write
 programs with coalesced access and simple for the memory management hardware to
 detect accesses that can be coalesced. Typically, a single burst can service 128
 bytes – not coincidentally, enough for each of the 32
-[threads](/gpu-glossary/device-software/thread) in a
-[warp](/gpu-glossary/device-software/warp) to load one 32 bit float.
+[threads](/gpu-glossary/device-software/thread.md) in a
+[warp](/gpu-glossary/device-software/warp.md) to load one 32 bit float.
 
 To demonstrate the performance impact of memory coalescing, let's consider the
-following [kernel](/gpu-glossary/device-software/kernel), which reads values
+following [kernel](/gpu-glossary/device-software/kernel.md), which reads values
 from an array with a variable `stride`, or spacing between accessed elements.
 With increasing stride, the number of DRAM bursts required to service the read
-issued by each [warp](/gpu-glossary/device-software/warp) will increase, leading
+issued by each [warp](/gpu-glossary/device-software/warp.md) will increase, leading
 to more physical accesses per logical access and so to reduced memory
 throughput.
 
@@ -103,7 +103,7 @@ stride        GB/s
 
 That is, adding a stride of two cuts the throughput in half, as the number of
 DRAM bursts required to service each
-[warp's](/gpu-glossary/device-software/warp) request doubles. Doubling the
+[warp's](/gpu-glossary/device-software/warp.md) request doubles. Doubling the
 stride to four again cuts throughput in half once more. The pattern changes once
 we hit a 16x reduction in throughput at a stride of 16. Performance degrades
 differently from there, presumably due to increasing visibility of other memory
