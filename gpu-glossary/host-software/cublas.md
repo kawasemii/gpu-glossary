@@ -6,21 +6,21 @@ cuBLAS (CUDA Basic Linear Algebra Subroutines) is NVIDIA's high-performance
 implementation of the
 [Basic Linear Algebra Subprograms (BLAS)](https://en.wikipedia.org/wiki/Basic_Linear_Algebra_Subprograms)
 standard. It is a proprietary software library that provides highly optimized
-[kernels](/gpu-glossary/device-software/kernel) for common linear algebra
+[kernels](/gpu-glossary/device-software/kernel.md) for common linear algebra
 operations.
 
 Instead of writing and optimizing common operations like matrix multiplication
 from scratch, developers can call cuBLAS functions from their host code. The
 library contains a wide array of kernels, each fine-tuned for specific data
 types (e.g. FP32, FP16), matrix sizes, and
-[Streaming Multiprocessor (SM) architectures](/gpu-glossary/device-hardware/streaming-multiprocessor-architecture).
+[Streaming Multiprocessor (SM) architectures](/gpu-glossary/device-hardware/streaming-multiprocessor-architecture.md).
 At runtime, cuBLAS uses (unknown) internal heuristics to select the most
 performant kernel and its optimal launch parameters. As a result, cuBLAS is the
 foundation for most [high-performance](/gpu-glossary/perf) numerical computing
 on NVIDIA GPUs and is used extensively by deep learning frameworks like PyTorch
 to accelerate their core operations, along with more specialized
-[kernel](/gpu-glossary/device-software/kernel) libraries like
-[cuDNN](/gpu-glossary/host-software/cudnn).
+[kernel](/gpu-glossary/device-software/kernel.md) libraries like
+[cuDNN](/gpu-glossary/host-software/cudnn.md).
 
 The single most common source of error when using cuBLAS is the matrix data
 layout. For historical reasons, and to maintain compatibility with the original
@@ -82,7 +82,7 @@ The `CUBLAS_OP_N` flag instructs the kernel to use the matrices as provided
 (without an additional transpose operation from its perspective).
 
 To use the cuBLAS library, it must be linked (e.g. using the flag `-lcublas`
-when compiling with [nvcc](/gpu-glossary/host-software/nvcc)). Its functions are
+when compiling with [nvcc](/gpu-glossary/host-software/nvcc.md)). Its functions are
 exposed via the `cublas_v2.h` header.
 
 For more information on cuBLAS, see the
