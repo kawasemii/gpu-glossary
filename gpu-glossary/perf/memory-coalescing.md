@@ -30,7 +30,7 @@ is accessed, multiple consecutive addresses are fetched together in parallel in
 a single clock. For a bit more detail, see Section 6.1 of
 [the 4th edition of Programming Massively Parallel Processors](https://www.amazon.com/dp/0323912311);
 for comprehensive detail, see Ulrich Drepper's excellent article
-[_What Every Programmer Should Know About Memory_](https://people.freebsd.org/~lstewart/articles/cpumemory.pdf) ([local copy here](../resouces/cpumemory.pdf)).
+[_What Every Programmer Should Know About Memory_](https://people.freebsd.org/~lstewart/articles/cpumemory.pdf) ([local copy here](../resources/cpumemory.pdf)).
 The access and transfer of these consecutive memory locations is referred to as
 a _DRAM burst_. If multiple concurrent logical accesses are serviced by a single
 physical burst, the access is said to be _coalesced_. Note that a physical
