@@ -6,7 +6,7 @@ The literal neck of a bottle limits the rate at which liquid can be poured; a
 metaphorical performance bottleneck in a system limits the rate at which tasks
 can be completed.
 
-![[Roofline diagrams](/gpu-glossary/perf/roofline-model.md) like this one are used to quickly identify performance bottlenecks in throughput-oriented systems. Adapted from [Williams, Waterman, and Patterson (2008)](https://people.eecs.berkeley.edu/~kubitron/cs252/handouts/papers/RooflineVyNoYellow.pdf) ([local copy here[(../resources/RooflineVyNoYellow.pdf)).](../resources/terminal-roofline-model.svg)
+![[Roofline diagrams](/gpu-glossary/perf/roofline-model.md) like this one are used to quickly identify performance bottlenecks in throughput-oriented systems. Adapted from [Williams, Waterman, and Patterson (2008)](https://people.eecs.berkeley.edu/~kubitron/cs252/handouts/papers/RooflineVyNoYellow.pdf) ([local copy here](../resources/RooflineVyNoYellow.pdf)).](../resources/terminal-roofline-model.svg)
 
 Bottlenecks are the target of performance optimization. The textbook approach to
 optimization is to
