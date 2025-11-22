@@ -3,12 +3,12 @@ title: What is a Streaming Multiprocessor?
 abbreviation: SM
 ---
 
-When we [program GPUs](/gpu-glossary/host-software/cuda-software-platform), we
+When we [program GPUs](/gpu-glossary/host-software/cuda-software-platform.md), we
 produce
-[sequences of instructions](/gpu-glossary/device-software/streaming-assembler)
+[sequences of instructions](/gpu-glossary/device-software/streaming-assembler.md)
 for its Streaming Multiprocessors to carry out.
 
-![A diagram of the internal architecture of an H100 GPU's Streaming Multiprocessors. GPU cores appear in green, other compute units in maroon, scheduling units in orange, and memory in blue. Modified from NVIDIA's [H100 white paper](https://modal-cdn.com/gpu-glossary/gtc22-whitepaper-hopper.pdf).](themed-image://gh100-sm.svg)
+![A diagram of the internal architecture of an H100 GPU's Streaming Multiprocessors. GPU cores appear in green, other compute units in maroon, scheduling units in orange, and memory in blue. Modified from NVIDIA's [H100 white paper](https://modal-cdn.com/gpu-glossary/gtc22-whitepaper-hopper.pdf)([local copy here](../resources/gtc22-whitepaper-hopper.pdf)).](../resources/terminal-gh100-sm.svg)
 
 Streaming Multiprocessors (SMs) of NVIDIA GPUs are roughly analogous to the
 cores of CPUs. That is, SMs both execute computations and store state available
@@ -19,7 +19,7 @@ execution or instruction pointer prediction (unlike all contemporary
 high-performance CPUs).
 
 However, GPU SMs can execute more
-[threads](/gpu-glossary/device-software/thread) in parallel.
+[threads](/gpu-glossary/device-software/thread.md) in parallel.
 
 For comparison: an
 [AMD EPYC 9965](https://www.techpowerup.com/cpu-specs/epyc-9965.c3904) CPU draws
@@ -28,9 +28,9 @@ most two threads at a time, for a total of 384 threads in parallel, running at
 about 1.25 W per thread.
 
 An H100 SXM GPU draws at most 700 W and has 132 SMs, each of which has four
-[Warp Schedulers](/gpu-glossary/device-hardware/warp-scheduler) that can each
+[Warp Schedulers](/gpu-glossary/device-hardware/warp-scheduler.md) that can each
 issue instructions to 32 threads (aka a
-[warp](/gpu-glossary/device-software/warp)) in parallel per clock cycle, for a
+[warp](/gpu-glossary/device-software/warp.md)) in parallel per clock cycle, for a
 total of 128 × 132 > 16,000 parallel threads running at about 5 cW apiece. Note
 that this is truly parallel: each of the 16,000 threads can make progress with
 each clock cycle.
@@ -43,28 +43,28 @@ A single SM on an H100 can concurrently execute up to 2048 threads split across
 250,000 concurrent threads.
 
 CPUs can also run many threads concurrently. But switches between
-[warps](/gpu-glossary/device-software/warp) happen at the speed of a single
+[warps](/gpu-glossary/device-software/warp.md) happen at the speed of a single
 clock cycle (over 1000x faster than context switches on a CPU), again powered by
-the SM's [Warp Schedulers](/gpu-glossary/device-hardware/warp-scheduler). The
-volume of available [warps](/gpu-glossary/device-software/warp) and the speed of
-[warp switches](/gpu-glossary/device-hardware/warp-scheduler) help
-[hide latency](/gpu-glossary/perf/latency-hiding) caused by memory reads, thread
+the SM's [Warp Schedulers](/gpu-glossary/device-hardware/warp-scheduler.md). The
+volume of available [warps](/gpu-glossary/device-software/warp.md) and the speed of
+[warp switches](/gpu-glossary/device-hardware/warp-scheduler.md) help
+[hide latency](/gpu-glossary/perf/latency-hiding.md) caused by memory reads, thread
 synchronization, or other expensive instructions, ensuring that the
-[arithmetic bandwidth](/gpu-glossary/perf/arithmetic-bandwidth) provided by the
-[CUDA Cores](/gpu-glossary/device-hardware/cuda-core) and
-[Tensor Cores](/gpu-glossary/device-hardware/tensor-core) is well utilized.
+[arithmetic bandwidth](/gpu-glossary/perf/arithmetic-bandwidth.md) provided by the
+[CUDA Cores](/gpu-glossary/device-hardware/cuda-core.md) and
+[Tensor Cores](/gpu-glossary/device-hardware/tensor-core.md) is well utilized.
 
-This [latency-hiding](/gpu-glossary/perf/latency-hiding) is the secret to GPUs'
+This [latency-hiding](/gpu-glossary/perf/latency-hiding.md) is the secret to GPUs'
 strengths. CPUs seek to hide latency from end-users and programmers by
 maintaining large, hardware-managed caches and sophisticated instruction
 prediction. This extra hardware limits the fraction of their silicon area,
 power, and heat budgets that CPUs can allocate to computation.
 
-![GPUs dedicate more of their area to compute (green), and less to control and caching (orange and blue), than do CPUs. Modified from a diagram in [Fabien Sanglard's blog](https://fabiensanglard.net/cuda), itself likely modified from a diagram in [the CUDA C Programming Guide](https://docs.nvidia.com/cuda/cuda-c-programming-guide/).](themed-image://cpu-vs-gpu.svg)
+![GPUs dedicate more of their area to compute (green), and less to control and caching (orange and blue), than do CPUs. Modified from a diagram in [Fabien Sanglard's blog](https://fabiensanglard.net/cuda), itself likely modified from a diagram in [the CUDA C Programming Guide](https://docs.nvidia.com/cuda/cuda-c-programming-guide/).](../resources/terminal-cpu-vs-gpu.svg)
 
 For programs or functions like neural network inference or sequential database
 scans for which it is relatively straightforward for programmers to
-[express](/gpu-glossary/device-software/cuda-programming-model) the behavior of
-[caches](/gpu-glossary/device-hardware/l1-data-cache) — e.g. store a chunk of
+[express](/gpu-glossary/device-software/cuda-programming-model.md) the behavior of
+[caches](/gpu-glossary/device-hardware/l1-data-cache.md) — e.g. store a chunk of
 each input matrix and keep it in cache for long enough to compute the related
 outputs — the result is much higher throughput.
