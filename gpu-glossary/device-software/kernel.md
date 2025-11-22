@@ -2,49 +2,49 @@
 title: What is a CUDA Kernel?
 ---
 
-![A single kernel launch corresponds to a [thread block grid](/gpu-glossary/device-software/thread-block-grid) in the [CUDA programming model](/gpu-glossary/device-software/cuda-programming-model). Modified from diagrams in NVIDIA's [CUDA Refresher: The CUDA Programming Model](https://developer.nvidia.com/blog/cuda-refresher-cuda-programming-model/) and the NVIDIA [CUDA C++ Programming Guide](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#programming-model).](themed-image://cuda-programming-model.svg)
+![A single kernel launch corresponds to a [thread block grid](/gpu-glossary/device-software/thread-block-grid.md) in the [CUDA programming model](/gpu-glossary/device-software/cuda-programming-model.md). Modified from diagrams in NVIDIA's [CUDA Refresher: The CUDA Programming Model](https://developer.nvidia.com/blog/cuda-refresher-cuda-programming-model/) and the NVIDIA [CUDA C++ Programming Guide](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#programming-model).](../resources/terminal-cuda-programming-model.svg)
 
 A kernel is the unit of
-[CUDA](/gpu-glossary/device-software/cuda-programming-model) code that
+[CUDA](/gpu-glossary/device-software/cuda-programming-model.md) code that
 programmers typically write and compose, akin to a procedure or function in
 languages targeting CPUs.
 
 Unlike procedures, a kernel is called ("launched") once and returns once, but is
 executed many times, once each by a number of
-[threads](/gpu-glossary/device-software/thread). These executions are generally
+[threads](/gpu-glossary/device-software/thread.md). These executions are generally
 concurrent (their execution order is non-deterministic) and parallel (they occur
 simultaneously on different execution units).
 
 The collection of all threads executing a kernel is organized as a kernel grid —
-aka a [thread block grid](/gpu-glossary/device-software/thread-block-grid), the
+aka a [thread block grid](/gpu-glossary/device-software/thread-block-grid.md), the
 highest level of the
-[CUDA programming model](/gpu-glossary/device-software/cuda-programming-model)'s
-[thread hierarchy](/gpu-glossary/device-software/thread-hierarchy). A kernel
+[CUDA programming model](/gpu-glossary/device-software/cuda-programming-model.md)'s
+[thread hierarchy](/gpu-glossary/device-software/thread-hierarchy.md). A kernel
 grid executes across multiple
-[Streaming Multiprocessors (SMs)](/gpu-glossary/device-hardware/streaming-multiprocessor)
+[Streaming Multiprocessors (SMs)](/gpu-glossary/device-hardware/streaming-multiprocessor.md)
 and so operates at the scale of the entire GPU. The matching level of the
-[memory hierarchy](/gpu-glossary/device-software/memory-hierarchy) is the
-[global memory](/gpu-glossary/device-software/global-memory).
+[memory hierarchy](/gpu-glossary/device-software/memory-hierarchy.md) is the
+[global memory](/gpu-glossary/device-software/global-memory.md).
 
-In [CUDA C++](/gpu-glossary/host-software/cuda-c), kernels are passed pointers
-to [global memory](/gpu-glossary/device-software/global-memory) on the device
+In [CUDA C++](/gpu-glossary/host-software/cuda-c.md), kernels are passed pointers
+to [global memory](/gpu-glossary/device-software/global-memory.md) on the device
 when they are invoked by the host and return nothing — they just mutate memory.
 
 To give a flavor for CUDA kernel programming, let's walk through two
 implementations of the "hello world" of CUDA kernels: matrix multiplication of
 two square matrices, `A` and `B`. The two implementations will differ in how
 they map the textbook matrix multiplication algorithm onto the
-[thread hierarchy](/gpu-glossary/device-software/thread-hierarchy) and
-[memory hierarchy](/gpu-glossary/device-software/memory-hierarchy).
+[thread hierarchy](/gpu-glossary/device-software/thread-hierarchy.md) and
+[memory hierarchy](/gpu-glossary/device-software/memory-hierarchy.md).
 
 In the simplest implementation, inspired by the first matmul kernel in
 [Programming Massively Parallel Processors](https://www.amazon.com/dp/0323912311)
-(4th edition, Figure 3.11), each [thread](/gpu-glossary/device-software/thread)
+(4th edition, Figure 3.11), each [thread](/gpu-glossary/device-software/thread.md)
 does all of the work to compute one element of the output matrix -- loading in
 turn each element of a particular `row` of `A` and a particular `col`umn of `B`
-into [registers](/gpu-glossary/device-software/registers), multiplying the
+into [registers](/gpu-glossary/device-software/registers.md), multiplying the
 paired elements, summing the results, and placing the sum back in
-[global memory](/gpu-glossary/device-software/global-memory).
+[global memory](/gpu-glossary/device-software/global-memory.md).
 
 ```cpp
 __global__ void mm(float* A, float* B, float* C, int N) {
@@ -61,29 +61,29 @@ __global__ void mm(float* A, float* B, float* C, int N) {
 }
 ```
 
-In this kernel, each [thread](/gpu-glossary/device-software/thread) does one
+In this kernel, each [thread](/gpu-glossary/device-software/thread.md) does one
 floating point operation (FLOP) per read from
-[global memory](/gpu-glossary/device-software/global-memory): a multiply and an
+[global memory](/gpu-glossary/device-software/global-memory.md): a multiply and an
 add; a load from `A` and a load from `B`. You'll never
 [use the whole GPU](https://modal.com/blog/gpu-utilization-guide) that way,
-since the [arithmetic bandwidth](/gpu-glossary/perf/arithmetic-bandwidth) of the
+since the [arithmetic bandwidth](/gpu-glossary/perf/arithmetic-bandwidth.md) of the
 [CUDA Cores](/gpu-glossary/device-hardware/cuda-core) in FLOPs/s is much higher
-than the [memory bandwidth](/gpu-glossary/perf/memory-bandwidth) between the
-[GPU RAM](/gpu-glossary/device-hardware/gpu-ram) and the
-[SMs](/gpu-glossary/device-hardware/streaming-multiprocessor).
+than the [memory bandwidth](/gpu-glossary/perf/memory-bandwidth.md) between the
+[GPU RAM](/gpu-glossary/device-hardware/gpu-ram.md) and the
+[SMs](/gpu-glossary/device-hardware/streaming-multiprocessor.md).
 
 We can increase
-[the ratio of FLOPs to memory operations](/gpu-glossary/perf/arithmetic-intensity)
+[the ratio of FLOPs to memory operations](/gpu-glossary/perf/arithmetic-intensity.md)
 by more carefully mapping the work in this algorithm onto the
-[thread hierarchy](/gpu-glossary/device-software/thread-hierarchy) and
-[memory hierarchy](/gpu-glossary/device-software/memory-hierarchy). In the
+[thread hierarchy](/gpu-glossary/device-software/thread-hierarchy.md) and
+[memory hierarchy](/gpu-glossary/device-software/memory-hierarchy.md). In the
 "tiled" matmul kernel below, inspired by that in Figure 5.9 of the 4th edition
 of
 [Programming Massively Parallel Processors](https://www.amazon.com/dp/0323912311),
 we map the loading of submatrices of `A` and `B` and the computation of
 submatrices of `C` onto
-[shared memory](/gpu-glossary/device-software/shared-memory) and
-[thread blocks](/gpu-glossary/device-software/thread-block) respectively.
+[shared memory](/gpu-glossary/device-software/shared-memory.md) and
+[thread blocks](/gpu-glossary/device-software/thread-block.md) respectively.
 
 ```cpp
 #define TILE_WIDTH 16
@@ -132,7 +132,7 @@ and map the algorithm even more tightly onto the hardware. Our kernels resemble
 his Kernel 1 and Kernel 3; the worklog covers ten kernels.
 
 That worklog and this article only consider writing kernels for execution on the
-[CUDA Cores](/gpu-glossary/device-hardware/cuda-core). The absolute fastest
+[CUDA Cores](/gpu-glossary/device-hardware/cuda-core.md). The absolute fastest
 matrix multiplication kernels run instead on
-[Tensor Cores](/gpu-glossary/device-hardware/tensor-core), which have a much
-higher [arithmetic bandwidth](/gpu-glossary/perf/arithmetic-bandwidth).
+[Tensor Cores](/gpu-glossary/device-hardware/tensor-core.md), which have a much
+higher [arithmetic bandwidth](/gpu-glossary/perf/arithmetic-bandwidth.md).
