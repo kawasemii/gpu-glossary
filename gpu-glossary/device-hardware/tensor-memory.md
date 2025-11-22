@@ -3,41 +3,41 @@ title: What is Tensor Memory?
 ---
 
 Tensor Memory is a specialized memory in the
-[Streaming Multiprocessor (SM)](/gpu-glossary/device-hardware/streaming-multiprocessor)
+[Streaming Multiprocessor (SM)](/gpu-glossary/device-hardware/streaming-multiprocessor.md)
 of certain GPUs, like the [B200](https://modal.com/blog/introducing-b200-h200),
 for storing the inputs and outputs of
-[Tensor Cores](/gpu-glossary/device-hardware/tensor-core).
+[Tensor Cores](/gpu-glossary/device-hardware/tensor-core.md).
 
 Tensor Memory access is highly restricted. Data must be moved collectively by
-four [warps](/gpu-glossary/device-software/warp) in a warpgroup, and they can
+four [warps](/gpu-glossary/device-software/warp.md) in a warpgroup, and they can
 move memory only in specific patterns between Tensor Memory and
-[registers](/gpu-glossary/device-software/registers), write
-[shared memory](/gpu-glossary/device-software/shared-memory) to Tensor Memory,
+[registers](/gpu-glossary/device-software/registers.md), write
+[shared memory](/gpu-glossary/device-software/shared-memory.md) to Tensor Memory,
 or issue matrix-multiply-accumulate (MMA) instructions to
-[Tensor Cores](/gpu-glossary/device-hardware/tensor-core) that use Tensor Memory
+[Tensor Cores](/gpu-glossary/device-hardware/tensor-core.md) that use Tensor Memory
 for specific operands. So much for a
-["compute-unified" device architecture](/gpu-glossary/device-hardware/cuda-device-architecture)!
+["compute-unified" device architecture](/gpu-glossary/device-hardware/cuda-device-architecture.md)!
 
 Specifically, for a `tcgen05.mma`
-[Parallel Thread eXecution](/gpu-glossary/device-software/parallel-thread-execution)
+[Parallel Thread eXecution](/gpu-glossary/device-software/parallel-thread-execution.md)
 instruction computing `D += A @ B` to use Tensor Memory, the "accumulator"
 matrix `D` _must_ be in Tensor Memory, the left-hand matrix `A` _may_ be in
-Tensor Memory or [shared memory](/gpu-glossary/device-software/shared-memory),
+Tensor Memory or [shared memory](/gpu-glossary/device-software/shared-memory.md),
 and the right-hand matrix B _must_ be in
-[shared memory](/gpu-glossary/device-software/shared-memory), not Tensor Memory.
+[shared memory](/gpu-glossary/device-software/shared-memory.md), not Tensor Memory.
 This is complex, but not arbitrary -- accumulators are accessed more frequently
 during matmuls than are the tiles, so they benefit more from specialized
 hardware, e.g. from shorter, simpler wiring between the
-[Tensor Cores](/gpu-glossary/device-hardware/tensor-core) and the Tensor Memory.
+[Tensor Cores](/gpu-glossary/device-hardware/tensor-core.md) and the Tensor Memory.
 Note that none of the matrices are in the
-[registers](/gpu-glossary/device-software/registers).
+[registers](/gpu-glossary/device-software/registers.md).
 
 Beware: Tensor Memory is not directly related to the
-[Tensor Memory Accelerator](/gpu-glossary/device-hardware/tensor-memory-accelerator),
+[Tensor Memory Accelerator](/gpu-glossary/device-hardware/tensor-memory-accelerator.md),
 which instead loads into the
-[L1 data cache](/gpu-glossary/device-hardware/l1-data-cache). Roughly speaking,
+[L1 data cache](/gpu-glossary/device-hardware/l1-data-cache.md). Roughly speaking,
 data is moved from that cache into Tensor Memory only as a result of a
-[Tensor Core](/gpu-glossary/device-hardware/tensor-core) operation and then is
+[Tensor Core](/gpu-glossary/device-hardware/tensor-core.md) operation and then is
 explicitly moved out for post-processing, e.g. the non-linearity after a matrix
 multiplication in a neural network.
 
