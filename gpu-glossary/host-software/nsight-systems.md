@@ -3,7 +3,7 @@ title: What is NVIDIA Nsight Systems?
 ---
 
 NVIDIA Nsight Systems is a performance debugging tool for
-[CUDA C++](/gpu-glossary/host-software/cuda-c) programs. It combines profiling,
+[CUDA C++](/gpu-glossary/host-software/cuda-c.md) programs. It combines profiling,
 tracing, and expert systems analysis in a GUI.
 
 No one wakes up and says "today I want to write a program that runs on a hard to
@@ -13,7 +13,7 @@ solve a computing problem. So
 [almost all GPU programs are performance-sensitive](/gpu-glossary/perf), and the
 performance debugging workflows supported by Nsight Systems or other tools built
 on top of the
-[CUDA Profiling Tools Interface](/gpu-glossary/host-software/cupti) are
+[CUDA Profiling Tools Interface](/gpu-glossary/host-software/cupti.md) are
 mission-critical.
 
 You can find its documentation
