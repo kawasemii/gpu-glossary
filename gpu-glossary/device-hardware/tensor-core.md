@@ -105,7 +105,7 @@ multiplications must break their work down into smaller matrix multiplications,
 like the 16 by 16 square matrix multiplication performed by the `mma_sync` call
 we are dissecting. We walk through this program below.
 
-![Register usage in a Tensor Core MMA for C = A @ B. The R11, R17, R16, and R18 registers are used in instructions 1, 2, 3, and 4, respectively. See surrounding text for details.](themed-image://tensor-core-mma.svg)
+![Register usage in a Tensor Core MMA for C = A @ B. The R11, R17, R16, and R18 registers are used in instructions 1, 2, 3, and 4, respectively. See surrounding text for details.](../resources/terminal-tensor-core-mma.svg)
 
 The first two instructions compute the matrix multiplication of the first eight
 columns of the input `a`, from `R12`, with the first eight rows of the input
